@@ -122,12 +122,23 @@ int main()
         //
         // 2. Write a nested loop to play the tune twice. Avoid replicating any code where possible.
         
-
+        
         for(int j=0; j < 2; j++){
             for(int i=0; i < (sizeof(notes)/sizeof(notes[0])); i++){
-                player.playTone(notes[i].note, notes[i].octave);
-                wait_us(notes[i].time_ms*1000);
-                player.rest();
+                char c[3] = "-";
+                char *doc = notes[i].note;
+                char *ptr = c;
+                
+                if(*doc==*ptr){
+                    player.rest();
+                    wait_us(notes[i].time_ms*1000);
+                }
+                else{
+                    player.rest();
+                    player.playTone(notes[i].note, notes[i].octave);
+                    wait_us(notes[i].time_ms*1000);
+                    player.rest();
+                }
                 
             }
         }
